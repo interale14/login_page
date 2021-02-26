@@ -1,7 +1,6 @@
 import Form from "../Forms/form";
 import FormField from "../Forms/formField";
 import {useState} from 'react';
-import formAction from "../Forms/formAction";
 import PillButton from "../cards/PillButton"
 
 function Login () {
@@ -17,8 +16,9 @@ function Login () {
     const myOnSubmit = function(e) {
         e.preventDefault();
         e.stopPropagation();
-        const {user, pswd} = formData;
-        alert(`Usuario: ${user}, PassWord: ${pswd}`);
+        const user = formData.username;
+        const pswd = formData.password;
+        alert(`Usuario: ${user}, Password: ${pswd}`);
     }
 
     const myOnChange = function(e) {
@@ -42,9 +42,9 @@ function Login () {
                 fname="username"
                 onchange={myOnChange} 
                 value={formData.username} 
-                caption="Correo Electronico" 
+                caption="Usuario"
                 error={formData.usernameerror}
-                placeholder="Tu correo electronico"
+                placeholder="Tu usuario"
             ></FormField>
             <FormField 
                 type="password" 
@@ -52,9 +52,9 @@ function Login () {
                 fname="password"
                 onchange={myOnChange} 
                 value={formData.password} 
-                caption="Contrasena" 
+                caption="Contraseña"
                 error={formData.passworderror}
-                placeholder="Tu contrasena"
+                placeholder="Tu contraseña"
             ></FormField>
             <PillButton type="submit" text="Enviar" click={myOnSubmit}></PillButton>
         </Form>

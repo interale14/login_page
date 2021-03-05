@@ -7,7 +7,6 @@ import Todo from "./components/Pages/Todo/Todo";
 
 function App() {
   return (
-    
     <Router>
       <BrandHeader></BrandHeader>
       <section className="w-11/12 p-4 m-auto bg-indigo-100 border-2 border-gray-600 mt-28 md:mt-48 md:w-8/12 lg:w-5/12 md:p-10">
@@ -18,7 +17,7 @@ function App() {
           <Route path="/login" exact>
             <Login></Login>
           </Route>
-          <Route path="/todo" exact>
+          <Route path="/todos" exact>
             <Todo></Todo>
           </Route>
         </Switch>

@@ -1,4 +1,4 @@
-
+import "./BrandHeader.css"
 
 function Brand ({title}){
     

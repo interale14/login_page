@@ -3,7 +3,7 @@
 function Form ({children}) {
 
     return (
-        <section>
+        <section className="fondo">
             {children}
         </section>
     );

@@ -3,9 +3,9 @@ import "./navbar.css"
 
 function NavBar () {
     let dummyData = [
-        {label: "Home", uri: "#home"},
-        {label: "Tarjetas", uri: "#cards"},
-        {label: "Acerca", uri: "#acerca"},
+        {label: "Home", uri: "/home"},
+        {label: "Login", uri: "/login"},
+        {label: "To-Do", uri: "/todos"},
     ];
 
     let navBarItems = dummyData.map((o, i)=>{
@@ -20,7 +20,7 @@ function NavBar () {
     return (
         <nav>
             <ul>
-                {navBarItems}
+                <li>{navBarItems}</li>
             </ul>
         </nav>
 

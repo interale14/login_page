@@ -34,7 +34,6 @@ function Login () {
     }
 
     return (
-
         <Form>
             <FormField 
                 type="text" 
@@ -59,7 +58,6 @@ function Login () {
             <PillButton type="submit" text="Enviar" click={myOnSubmit}></PillButton>
         </Form>
     );     
-
 }
 
 export default Login;

@@ -1,6 +1,6 @@
 import {MdDone, MdDelete} from 'react-icons/md';
 
-function TodoListItems(description, id, completed, doneH, deleteH) {
+function TodoListItems(description, id, completed, doneH, deleteH, key) {
     const onClick = (e) => {
         doneH(id);
     };
@@ -9,23 +9,34 @@ function TodoListItems(description, id, completed, doneH, deleteH) {
         deleteH(id);
     };
 
+    const styles = {
+        backgroundColor: "#888",
+        display: "flex",
+        padding: 1,
+        borderBottom: "1 solid #333",
+        justifyContent:"space-between",
+        alignItems:"center",
+    }
+
     const myClass = (completed)?"striked": "";
 
     return (
-        <li>
+        <li style={styles} key={key}>
             <span className={myClass}>{description}</span>
-            <MdDone onClick={onClick}></MdDone>
-            <MdDelete onClick={onDelClick}></MdDelete>
+            <span className="flex">
+                <MdDone onClick={onClick}></MdDone>
+                <MdDelete onClick={onDelClick}></MdDelete>
+            </span>
         </li>
     );
 }
 
 function TodoList ({todos, doneH, deleteH}) {
 
-    const todosItems = todos.map((o) => {
+    const todosItems = todos.map((o)=>{
         return (
             <TodoListItems
-                key={o.doneHid}
+                key={o.id}
                 description={o.description} 
                 id={o.id}
                 completed={o.completed}
@@ -34,6 +45,7 @@ function TodoList ({todos, doneH, deleteH}) {
             />
         )
     });
+
     return (
         <section className="TodoList">
           <ul>

@@ -17,6 +17,8 @@ function Todo () {
 
     const onAddNew = (e) => {
         alert("Se agregó la nota.");
+        e.preventDefault();
+        e.stopPropagation();
 
         let newTodo = {
             description: todoData.newTodo,

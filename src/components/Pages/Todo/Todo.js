@@ -1,13 +1,27 @@
 import NewTodo from './Newtodo';
 import TodoList from './TodoList';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import "./TodoList.css";
+
+import fire from '../../../FireBaseInit';
 
 function Todo () {
     const [todoData, setTodoData] = useState({
         todos: [],
         newTodo: "",
     });
+
+    useEffect(
+        ()=>{
+            const todosRef = fire.database().ref('todos').orderByKey().limitToLast(100);
+            todosRef.on('child_added', (snapshot) => {
+                let newTodo = { ...snapshot.val(), fb_id: snapshot.key };
+                let newTodos = todoData.todos;
+                newTodos.push(newTodo);
+                setTodoData({...todoData, todos: newTodos});
+            })        
+        },[]
+    );
     
     const onChange = (e) => {
         const {name, value} = e.currentTarget;
@@ -25,12 +39,16 @@ function Todo () {
             completed: false,
             id: new Date().getTime()
         };
+        
 
+        fire.database().ref("todos").push(newTodo);
+        /*
         let newTodos = todoData.todos;
 
         newTodos.push(newTodo);
 
         setTodoData({todos:newTodos, newTodo: ""});
+        */
     }
 
     const doneH = (id) => {

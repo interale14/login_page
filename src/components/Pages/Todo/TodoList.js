@@ -1,12 +1,12 @@
 import {MdDone, MdDelete} from 'react-icons/md';
 
-function TodoListItems(description, id, completed, doneH, deleteH, key) {
+function TodoListItems(description, fb_id, completed, doneH, deleteH, key) {
     const onClick = (e) => {
-        doneH(id);
+        doneH(fb_id);
     };
 
     const onDelClick = (e) => {
-        deleteH(id);
+        deleteH(fb_id);
     };
 
     const styles = {
@@ -39,6 +39,7 @@ function TodoList ({todos, doneH, deleteH}) {
                 key={o.id}
                 description={o.description} 
                 id={o.id}
+                fb_id={o.fb_id}
                 completed={o.completed}
                 doneH={doneH} 
                 deleteH={deleteH}

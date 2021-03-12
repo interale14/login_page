@@ -9,6 +9,7 @@ function Todo () {
     const [todoData, setTodoData] = useState({
         todos: [],
         newTodo: "",
+        waiting:false,
     });
 
     useEffect(
@@ -19,7 +20,28 @@ function Todo () {
                 let newTodos = todoData.todos;
                 newTodos.push(newTodo);
                 setTodoData({...todoData, todos: newTodos});
-            })        
+            });
+            todosRef.on('child_removed', (snapshot)=>{
+                const deletedKey = snapshot.key;
+                let newTodos = todoData.todos.filter(o=>{
+                  return o.fb_id !==deletedKey;
+                });
+                setTodoData({ ...todoData, todos: newTodos });
+            });
+            todosRef.on('child_changed', (snapshot) => {
+                const changedKey = snapshot.key;
+                const data = snapshot.val();
+                let newTodos = todoData.todos.map(o => {
+                  if (o.fb_id == changedKey) {
+                    o = {...o, ...data};
+                  }
+                  return o;
+                });
+                setTodoData({ ...todoData, todos: newTodos });
+            });
+            return ()=>{
+                todosRef.off();
+            }        
         },[]
     );
     
@@ -52,6 +74,17 @@ function Todo () {
     }
 
     const doneH = (id) => {
+        const ref = fire.database().ref("todos");
+        const fbtodo = ref.child(id);
+        const lcTodo = todoData.todos.find( (o)=>{
+            return o.fb_id === id;
+        });
+
+        fbtodo.update({
+            "completed": !lcTodo.completed
+        });
+
+        /*
         const newTodos = todoData.todos.map((o)=>{
             if(o.id === id){
                 o.completed = !o.completed;
@@ -60,14 +93,26 @@ function Todo () {
         });
 
         setTodoData({...todoData, todos:newTodos});
+        */
     };
 
     const deleteH = (id) => {
+        const ref = fire.database().ref("todos");
+        const fbtodo = ref.child(id);
+        const lcTodo = todoData.todos.find( (o)=>{
+            return o.fb_id === id;
+        });
+
+        fbtodo.update({
+            "completed": !lcTodo.completed
+        });
+        /*
         const newTodos = todoData.todos.filter((o) => {
             return o.id !==id;
         });
 
         setTodoData({ ...todoData, todos: newTodos });
+        */
     }
 
     const tmpTodos = todoData.todos.map((o) => {return JSON.stringify(o)} ).join(" | ");
